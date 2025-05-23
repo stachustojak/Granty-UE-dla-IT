@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Granty UE dla IT: Twój Przewodnik i Katalog Firm Doradczych (Ścieżka SMART)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Base styles with Inter font */
+        body { font-family: 'Inter', sans-serif; }
+
+        /* Custom scrollbar for Webkit */
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: #e0f2fe; border-radius: 10px; } /* sky-100 */
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; } /* slate-400 */
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; } /* slate-600 */
+
+        /* Enhanced Tab Button Styling */
+        .tab-button {
+            transition: all 0.3s ease-in-out;
+            @apply text-slate-700 border-transparent hover:text-sky-600 hover:border-sky-300;
+        }
+        .tab-button.active {
+            @apply text-sky-700 border-sky-500 font-semibold;
+        }
+
+        /* Content Section Display */
+        .content-section { display: none; opacity: 0; transition: opacity 0.5s ease-in-out; }
+        .content-section.active { display: block; opacity: 1; }
+
+        /* Firm Button Styling (now a card) */
+        .firm-card {
+            transition: all 0.2s ease-in-out;
+            @apply bg-white p-4 rounded-xl shadow-md cursor-pointer border border-slate-200;
+        }
+        .firm-card:hover {
+            @apply shadow-lg border-sky-300 -translate-y-1;
+        }
+        .firm-card.active {
+            @apply bg-sky-600 text-white shadow-xl border-sky-600 -translate-y-1;
+        }
+        .firm-card.active h3 {
+            @apply text-white;
+        }
+
+        /* Card-like styling for selection criteria (with improved icon animation) */
+        #selectionCriteria .card {
+            transition: all 0.2s ease-in-out;
+            @apply bg-white p-5 rounded-xl shadow-md cursor-pointer hover:shadow-lg hover:border-sky-200 border border-transparent;
+        }
+        #selectionCriteria .card:hover {
+            transform: translateY(-2px);
+        }
+        #selectionCriteria .card .icon {
+            transition: transform 0.3s ease-in-out;
+            display: inline-block; /* Ensure transform works */
+        }
+        #selectionCriteria .card .icon.rotate-180 {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 text-slate-800">
+    <header class="bg-sky-700 text-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <svg class="h-8 w-8 mr-2 text-sky-300" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                    </svg>
+                    <div>
+                        <span class="text-xl sm:text-2xl font-bold">IT Granty UE</span>
+                        <p class="hidden sm:block text-xs text-sky-200">Twój przewodnik po Ścieżce SMART</p>
+                    </div>
+                </div>
+                
+                <nav class="hidden md:flex items-center space-x-4">
+                    <a href="#program-smart" class="hover:bg-sky-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Program SMART</a>
+                    <a href="#firmy" class="hover:bg-sky-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Firmy Doradcze</a>
+                    <a href="#porownanie" class="hover:bg-sky-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Porównanie Firm</a>
+                    <a href="#wybor" class="hover:bg-sky-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Jak Wybrać Partnera</a>
+                    <a href="#wnioski" class="hover:bg-sky-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Kluczowe Wnioski</a>
+                </nav>
+                <button id="mobileMenuButton" class="md:hidden p-2 rounded-md hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition-colors duration-200">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="md:hidden hidden bg-sky-700">
+            <a href="#program-smart" class="block hover:bg-sky-600 px-3 py-3 text-base font-medium transition-colors duration-200">Program SMART</a>
+            <a href="#firmy" class="block hover:bg-sky-600 px-3 py-3 text-base font-medium transition-colors duration-200">Firmy Doradcze</a>
+            <a href="#porownanie" class="block hover:bg-sky-600 px-3 py-3 text-base font-medium transition-colors duration-200">Porównanie Firm</a>
+            <a href="#wybor" class="block hover:bg-sky-600 px-3 py-3 text-base font-medium transition-colors duration-200">Jak Wybrać Partnera</a>
+            <a href="#wnioski" class="block hover:bg-sky-600 px-3 py-3 text-base font-medium transition-colors duration-200">Kluczowe Wnioski</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+        
+        <section id="hero" class="relative bg-white p-8 sm:p-10 lg:p-12 rounded-2xl shadow-2xl overflow-hidden mb-16 pt-16 -mt-16 border border-sky-100">
+            <div class="absolute inset-0 bg-cover bg-center opacity-10" style="background-image: url('https://images.unsplash.com/photo-1517430816045-df4b7de11681?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
+            <div class="relative z-10 text-center lg:text-left">
+                <div class="flex items-center justify-center lg:justify-start mb-4">
+                    <svg class="h-12 w-12 text-blue-600 mr-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.004 12.004 0 002.92 12c0 3.072 1.871 5.765 4.502 7.33M12 21c4.97 0 9-3.327 9-7c0-1.255-.422-2.45-1.12-3.414m-11.92-1.972A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.004 12.004 0 002.92 12c0 3.072 1.871 5.765 4.502 7.33M12 21c4.97 0 9-3.327 9-7c0-1.255-.422-2.45-1.12-3.414" />
+                    </svg>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-sky-500 leading-tight">
+                        Granty UE dla IT: Ścieżka SMART
+                    </h1>
+                </div>
+                <p class="mt-4 text-xl text-slate-700 leading-relaxed max-w-4xl mx-auto lg:mx-0">
+                    Odkryj potencjał programów unijnych dla Twojej firmy IT. Nasz przewodnik i katalog firm doradczych pomoże Ci w pozyskaniu funduszy na innowacyjne projekty, B+R i cyfryzację.
+                </p>
+                <div class="mt-8 flex justify-center lg:justify-start space-x-4">
+                    <a href="#firmy" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-lg text-white bg-sky-600 hover:bg-sky-700 transition-colors duration-200">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 01-2 0V3a1 1 0 011-1zm4 14a1 1 0 01-1 1h-3a1 1 0 010-2h3a1 1 0 011 1zm-7 0a1 1 0 01-1 1H3a1 1 0 010-2h3a1 1 0 011 1zm0-7a1 1 0 011 1v1a1 1 0 11-2 0V9a1 1 0 011-1zm4 0a1 1 0 011 1v1a1 1 0 11-2 0V9a1 1 0 011-1zm3 0a1 1 0 011 1v1a1 1 0 11-2 0V9a1 1 0 011-1zm-6-7a1 1 0 011 1v1a1 1 0 01-2 0V3a1 1 0 011-1zm4 0a1 1 0 011 1v1a1 1 0 01-2 0V3a1 1 0 011-1zm-7 14a1 1 0 011 1v1a1 1 0 01-2 0v-1a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                        Znajdź Doradcę
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="program-smart" class="mb-16 pt-16 -mt-16">
+            <h2 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-sky-500 mb-6 text-center lg:text-left">Program Ścieżka SMART - Szczegóły</h2>
+            <p class="mb-8 text-lg text-slate-700 leading-relaxed max-w-3xl mx-auto lg:mx-0">Fundusze unijne, a zwłaszcza program Ścieżka SMART w ramach Funduszy Europejskich dla Nowoczesnej Gospodarki (FENG), stanowią kluczowe źródło finansowania dla polskich firm IT. Umożliwiają one realizację innowacyjnych projektów, rozwój prac badawczo-rozwojowych (B+R) oraz transformację cyfrową, co jest niezbędne do budowania konkurencyjności na rynku globalnym. Ta sekcja przybliża główne założenia programu Ścieżka SMART, aby pomóc zrozumieć jego potencjał dla sektora IT.</p>
+            
+            <div class="bg-white p-8 rounded-2xl shadow-2xl border border-blue-100 transform transition-all duration-300 hover:shadow-xl">
+                <div class="mb-6 border-b border-slate-200 pb-2">
+                    <nav class="flex flex-wrap -mb-px" aria-label="Tabs">
+                        <button class="tab-button active whitespace-nowrap py-3 px-3 sm:px-4 text-sm focus:outline-none mr-2 sm:mr-4" data-tab="cel">Cel i Znaczenie</button>
+                        <button class="tab-button whitespace-nowrap py-3 px-3 sm:px-4 text-sm focus:outline-none mr-2 sm:mr-4" data-tab="kryteria">Kryteria</button>
+                        <button class="tab-button whitespace-nowrap py-3 px-3 sm:px-4 text-sm focus:outline-none mr-2 sm:mr-4" data-tab="moduly">Moduły</button>
+                        <button class="tab-button whitespace-nowrap py-3 px-3 sm:px-4 text-sm focus:outline-none" data-tab="finansowanie">Finansowanie</button>
+                    </nav>
+                </div>
+
+                <div id="tab-cel" class="content-section active">
+                    <h3 class="text-2xl font-semibold text-sky-700 mb-3">Cel i Znaczenie Strategiczne Ścieżki SMART</h3>
+                    <p class="mb-2 leading-relaxed">Ścieżka SMART to flagowy instrument FENG 2021-2027, wspierający innowacje i konkurencyjność poprzez finansowanie B+R oraz wdrażanie wyników na rynek. Celem jest podniesienie innowacyjności polskich przedsiębiorstw.</p>
+                    <p class="mb-2 leading-relaxed">Kluczową cechą jest <strong class="text-sky-700 font-medium">modułowość</strong>, pozwalająca łączyć różne aspekty cyklu innowacyjnego (B+R, wdrożenie, internacjonalizacja, cyfryzacja, kompetencje) w jeden wniosek. To redukuje obciążenia administracyjne i umożliwia holistyczne planowanie, idealne dla wieloaspektowych projektów IT.</p>
+                </div>
+
+                <div id="tab-kryteria" class="content-section">
+                    <h3 class="text-2xl font-semibold text-sky-700 mb-3">Kryteria Kwalifikowalności i Beneficjenci</h3>
+                    <p class="mb-2 leading-relaxed">Program jest otwarty dla <strong class="text-sky-700 font-medium">mikro, małych, średnich i dużych przedsiębiorstw (MŚP oraz duże firmy)</strong>. Kwalifikują się również konsorcja przedsiębiorstw lub przedsiębiorstw z jednostkami naukowymi.</p>
+                    <p class="mb-2 leading-relaxed">W przypadku naborów NCBR, liderem konsorcjum musi być przedsiębiorstwo. Definicja MŚP: mniej niż 250 pracowników, aktywa bilansu &lt; 43 mln EUR lub przychody &lt; 50 mln EUR.</p>
+                    <p class="mb-2 leading-relaxed">Szeroki zakres beneficjentów wspiera innowacje w całym spektrum gospodarki, co jest korzystne dla zróżnicowanego sektora IT.</p>
+                </div>
+
+                <div id="tab-moduly" class="content-section">
+                    <h3 class="text-2xl font-semibold text-sky-700 mb-3">Struktura Modułowa i Jej Znaczenie dla IT</h3>
+                    <p class="mb-2 leading-relaxed">Projekty muszą zawierać co najmniej jeden moduł obligatoryjny: B+R lub Wdrożenie Innowacji (dla MŚP); dla dużych firm obligatoryjny jest moduł B+R.</p>
+                    <ul class="list-disc pl-6 space-y-2 mb-3 text-slate-700">
+                        <li><strong class="text-sky-700 font-medium">Moduł B+R:</strong> Badania przemysłowe lub prace rozwojowe prowadzące do innowacji. Obejmuje "napisanie nowych programów komputerowych" – kluczowe dla IT.</li>
+                        <li><strong class="text-sky-700 font-medium">Moduł Wdrożenie Innowacji:</strong> Wdrożenie wyników prac B+R jako innowacji produktowych/procesowych.</li>
+                    </ul>
+                    <p class="mb-2 font-semibold text-sky-700">Moduły fakultatywne istotne dla IT:</p>
+                    <ul class="list-disc pl-6 space-y-1 text-slate-700">
+                        <li><strong>Cyfryzacja:</strong> Inwestycje w rozwiązania cyfrowe dla transformacji biznesowej.</li>
+                        <li><strong>Internacjonalizacja:</strong> Promocja zagraniczna, ochrona własności przemysłowej.</li>
+                        <li><strong>Kompetencje:</strong> Rozwój kompetencji pracowników i kadry zarządzającej.</li>
+                        <li><strong>Infrastruktura B+R:</strong> Tworzenie/rozwój centrów B+R.</li>
+                    </ul>
+                    <p class="mt-3 leading-relaxed">Wyraźne włączenie "pisania nowych programów komputerowych" i modułu "Cyfryzacja" czyni program niezwykle atrakcyjnym dla projektów IT.</p>
+                </div>
+
+                <div id="tab-finansowanie" class="content-section">
+                    <h3 class="text-2xl font-semibold text-sky-700 mb-3">Poziomy Finansowania i Koszty Kwalifikowalne</h3>
+                    <p class="mb-2 leading-relaxed">Maksymalna wysokość dotacji: do 70 mln PLN (duże firmy), do 50 mln PLN (MŚP).</p>
+                    <p class="mb-2 leading-relaxed">Poziomy współfinansowania: 15-85% zależnie od wydatku, wielkości firmy i lokalizacji.</p>
+                    <div class="chart-container my-6 p-4 bg-slate-50 rounded-lg shadow-inner">
+                        <canvas id="coFinancingChart"></canvas>
+                    </div>
+                    <p class="text-sm text-slate-600 text-center mb-3">Przykładowe poziomy współfinansowania dla modułu B+R (Badania Przemysłowe).</p>
+                    <p class="mb-2 leading-relaxed">Minimalna wartość kosztów kwalifikowalnych: 3 mln PLN dla jednego modułu obligatoryjnego.</p>
+                    <p class="mb-2 font-semibold text-sky-700">Koszty kwalifikowalne związane z IT:</p>
+                    <ul class="list-disc pl-6 space-y-1 text-slate-700">
+                        <li>Wynagrodzenia personelu B+R.</li>
+                        <li>Podwykonawstwo prac B+R.</li>
+                        <li>Zakup specjalistycznego oprogramowania (nie biurowego/księgowego).</li>
+                        <li>Wytworzenie wartości niematerialnych i prawnych na zamówienie.</li>
+                        <li>Specjalistyczne usługi doradcze.</li>
+                    </ul>
+                    <p class="mt-3 leading-relaxed">Niektóre formy wsparcia mogą być częściowo zwrotne (Dotacja Warunkowa).</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="firmy" class="mb-16 pt-16 -mt-16">
+            <h2 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-sky-500 mb-6 text-center lg:text-left">Przegląd Firm Doradczych</h2>
+            <p class="mb-8 text-lg text-slate-700 leading-relaxed max-w-3xl mx-auto lg:mx-0">Na polskim rynku działa wiele firm doradczych specjalizujących się w pozyskiwaniu grantów UE dla sektora IT, w tym w ramach programu Ścieżka SMART. Wybór odpowiedniego partnera jest kluczowy. Poniżej znajduje się przegląd wiodących firm, który pomoże zorientować się w ich specjalizacjach i doświadczeniu. Kliknij na nazwę firmy, aby zobaczyć szczegółowe informacje.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-1 bg-white p-6 rounded-2xl shadow-xl border border-blue-100">
+                    <h3 class="text-xl font-semibold text-sky-700 mb-4 border-b pb-3 border-slate-200">Wybierz firmę:</h3>
+                    <div id="firmButtons" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-3">
+                        </div>
+                </div>
+                <div class="md:col-span-3 bg-white p-8 rounded-2xl shadow-2xl border border-blue-100 min-h-[400px] flex items-center justify-center">
+                    <div id="firmDetails" class="w-full">
+                        <p class="text-slate-500 text-center text-lg">Wybierz firmę z listy, aby zobaczyć szczegóły.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="porownanie" class="mb-16 pt-16 -mt-16">
+            <h2 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-sky-500 mb-6 text-center lg:text-left">Porównanie Firm Doradczych</h2>
+            <p class="mb-8 text-lg text-slate-700 leading-relaxed max-w-3xl mx-auto lg:mx-0">Aby ułatwić podjęcie decyzji, ta sekcja umożliwia bezpośrednie porównanie wybranych firm doradczych. Zaznacz maksymalnie trzy firmy, aby zobaczyć ich kluczowe atrybuty obok siebie. Pomoże to zidentyfikować partnera najlepiej dopasowanego do specyficznych potrzeb Twojego projektu IT.</p>
+            <div class="bg-white p-8 rounded-2xl shadow-2xl border border-blue-100">
+                <div class="mb-6 border-b pb-4 border-slate-200">
+                    <h3 class="text-xl font-semibold text-sky-700 mb-3">Wybierz firmy do porównania (max 3):</h3>
+                    <div id="comparisonCheckboxes" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                        </div>
+                </div>
+                <div class="overflow-x-auto pb-4">
+                    <table id="comparisonTable" class="min-w-full divide-y divide-slate-200 border border-slate-200 rounded-lg">
+                        <thead class="bg-slate-100">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider sticky left-0 bg-slate-100 z-10">Kryterium</th>
+                                </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-slate-200">
+                            <tr><td colspan="4" class="text-center py-10 text-slate-500 text-lg">Wybierz firmy, aby rozpocząć porównanie.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="wybor" class="mb-16 pt-16 -mt-16">
+            <h2 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-sky-500 mb-6 text-center lg:text-left">Jak Wybrać Partnera Doradczego?</h2>
+            <p class="mb-8 text-lg text-slate-700 leading-relaxed max-w-3xl mx-auto lg:mx-0">Wybór odpowiedniej firmy doradczej to decyzja strategiczna, która może znacząco wpłynąć na sukces aplikacji grantowej. Poniżej znajdują się kluczowe czynniki, które warto wziąć pod uwagę. Kliknij na każdy element, aby dowiedzieć się więcej.</p>
+            <div id="selectionCriteria" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+        </section>
+
+        <section id="wnioski" class="pt-16 -mt-16">
+            <h2 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-sky-500 mb-6 text-center lg:text-left">Kluczowe Wnioski i Rekomendacje</h2>
+            <p class="mb-8 text-lg text-slate-700 leading-relaxed max-w-3xl mx-auto lg:mx-0">Podsumowując, fundusze unijne, zwłaszcza program Ścieżka SMART, oferują znaczące możliwości dla polskich firm IT. Skuteczne pozyskanie tych środków wymaga jednak starannego przygotowania i często wsparcia doświadczonego doradcy. Poniższe rekomendacje pomogą w nawigacji po tym procesie.</p>
+            <div class="bg-white p-8 rounded-2xl shadow-2xl border border-blue-100 space-y-6">
+                <div class="p-5 border border-sky-200 rounded-lg bg-sky-50 shadow-sm transition-all duration-300 hover:shadow-md hover:border-sky-300">
+                    <h3 class="text-xl font-semibold text-sky-700 mb-2">🚀 Wczesne Zaangażowanie i Definicja Projektu</h3>
+                    <p class="text-slate-700 leading-relaxed">Rozpocznij rozmowy z doradcami na długo przed terminami. Pozwoli to na dokładną analizę, strategiczne dopasowanie i skrupulatne planowanie.</p>
+                </div>
+                <div class="p-5 border border-sky-200 rounded-lg bg-sky-50 shadow-sm transition-all duration-300 hover:shadow-md hover:border-sky-300">
+                    <h3 class="text-xl font-semibold text-sky-700 mb-2">🔍 Rygorystyczna Weryfikacja (Due Diligence)</h3>
+                    <p class="text-slate-700 leading-relaxed">Szukaj firm z historią udanych wniosków, szczególnie w IT. Liczba i wartość pozyskanych grantów są ważnymi wskaźnikami.</p>
+                </div>
+                <div class="p-5 border border-sky-200 rounded-lg bg-sky-50 shadow-sm transition-all duration-300 hover:shadow-md hover:border-sky-300">
+                    <h3 class="text-xl font-semibold text-sky-700 mb-2">🎯 Dopasowany Wybór Partnera</h3>
+                    <p class="text-slate-700 leading-relaxed">Wybierz firmę, której specjalizacja odpowiada charakterowi projektu (np. AI/ML vs. cyfryzacja) i wielkości Twojej firmy (MŚP vs. duże przedsiębiorstwo).</p>
+                </div>
+                <div class="p-5 border border-sky-200 rounded-lg bg-sky-50 shadow-sm transition-all duration-300 hover:shadow-md hover:border-sky-300">
+                    <h3 class="text-xl font-semibold text-sky-700 mb-2">🤝 Wymaganie Holistycznego Wsparcia</h3>
+                    <p class="text-slate-700 leading-relaxed">Priorytetowo traktuj firmy oferujące kompleksowe usługi – od oceny projektu, przez pisanie wniosku, aż po zarządzanie i rozliczanie grantu.</p>
+                </div>
+                <div class="p-5 border border-sky-200 rounded-lg bg-sky-50 shadow-sm transition-all duration-300 hover:shadow-md hover:border-sky-300">
+                    <h3 class="text-xl font-semibold text-sky-700 mb-2">💡 Koncentracja na Prawdziwej Innowacji</h3>
+                    <p class="text-slate-700 leading-relaxed">Projekty muszą jasno przedstawiać swoją nowość, zaawansowanie technologiczne i potencjalny wpływ. Konsultant musi umieć to skutecznie zaprezentować.</p>
+                 </div>
+                 <div class="p-5 border border-sky-200 rounded-lg bg-sky-50 shadow-sm transition-all duration-300 hover:shadow-md hover:border-sky-300">
+                    <h3 class="text-xl font-semibold text-sky-700 mb-2">📅 Pozostawanie na Bieżąco i Zaangażowanie</h3>
+                    <p class="text-slate-700 leading-relaxed">Regularnie sprawdzaj oficjalne strony PARP i NCBR. Aktywne zaangażowanie ze strony firmy jest kluczowe, nawet przy współpracy z konsultantem.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300 mt-16 py-8 text-center shadow-inner">
+        <p>&copy; <span id="currentYear"></span> Interaktywny Przewodnik po Grantach UE dla IT. Wszelkie prawa zastrzeżone.</p>
+        <p class="text-sm">Informacje oparte na dostarczonym raporcie.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentYear = new Date().getFullYear();
+            document.getElementById('currentYear').textContent = currentYear;
+
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            document.querySelectorAll('#mobileMenu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+            
+            // Smooth scroll for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // Adjust scroll position for fixed header
+                        const headerOffset = document.querySelector('header').offsetHeight;
+                        // For the "Program SMART" link, target the #program-smart section directly
+                        let scrollTarget = targetElement;
+                        // For the "Program SMART" link specifically, we want to scroll to the #program-smart section's actual top
+                        if (targetId === '#program-smart') {
+                            scrollTarget = document.getElementById('program-smart');
+                        }
+
+                        const elementPosition = scrollTarget.getBoundingClientRect().top + window.pageYOffset;
+                        const offsetPosition = elementPosition - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: "smooth"
+                        });
+                    }
+                });
+            });
+
+
+            // Tab functionality
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    contentSections.forEach(section => section.classList.remove('active'));
+                    const targetTab = button.getAttribute('data-tab');
+                    document.getElementById(`tab-${targetTab}`).classList.add('active');
+                });
+            });
+
+            // Chart.js - Co-financing levels
+            const ctx = document.getElementById('coFinancingChart');
+            if (ctx) {
+                const coFinancingChart = new Chart(ctx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['Mikro/Małe Firmy', 'Średnie Firmy', 'Duże Firmy'],
+                        datasets: [{
+                            label: 'Poziom współfinansowania B+R (Badania Przemysłowe)',
+                            data: [80, 75, 65],
+                            backgroundColor: ['#0ea5e9', '#38bdf8', '#7dd3fc'], // sky-600, sky-500, sky-300
+                            borderColor: ['#0284c7', '#0ea5e9', '#38bdf8'], // sky-700, sky-600, sky-500
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%'
+                                    }
+                                },
+                                grid: {
+                                    color: '#e2e8f0' // slate-200
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    color: '#e2e8f0' // slate-200
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    color: '#334155' // slate-700
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.y !== null) {
+                                            label += context.parsed.y + '%';
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+
+            // DEFINICJA DANYCH FIRM
+            const firmsData = [
+                {
+                    id: "conquest",
+                    name: "ConQuest Consulting",
+                    profile: "Firma doradcza koncentrująca się na aplikacjach o granty unijne, w szczególności w ramach programu FENG.",
+                    specialization: "Kompleksowe wsparcie dla FENG i Ścieżki SMART, w tym modułów B+R, wdrożenia, cyfryzacji, z naciskiem na IT (np. \"napisanie nowych programów komputerowych\").",
+                    smartExperience: "Wyraźnie deklaruje wsparcie w składaniu wniosków FENG/SMART, kładąc nacisk na planowanie, precyzyjny opis projektu i zgodność z priorytetami agencji. Oferuje szkolenia.",
+                    otherPrograms: "Głównie FENG Ścieżka SMART, Seal of Excellence, Go to Brand, Paszporty do eksportu, Internacjonalizacja MŚP.",
+                    services: "Przygotowanie wniosków, planowanie strategiczne, dopracowanie opisu projektu, zapewnienie zgodności, konsultacje, szkolenia.",
+                    uvp: "Metodyka priorytetyzująca jakość i strategiczne dopasowanie wniosku, głębokie zrozumienie kryteriów oceny.",
+                    link: "https://conquest.pl/",
+                    email: "board@conquest.pl",
+                    phone: "+48 798 115 707, +48 662 986 071"
+                },
+                {
+                    id: "ecdf",
+                    name: "ECDF Dotacje",
+                    profile: "Jedna z wiodących firm doradczych w Polsce z wieloletnim doświadczeniem w pozyskiwaniu funduszy unijnych.",
+                    specialization: "Kompleksowe wsparcie dla przedsiębiorców z sektora IT, od identyfikacji potrzeb do rozliczenia projektu. Specjalizują się w projektach B+R, wdrożeniowych, cyfryzacji i automatyzacji.",
+                    smartExperience: "Aktywnie wspiera przedsiębiorców w aplikacji do programu Ścieżka SMART, szczegółowo opisując jego moduły (B+R, wdrożenie innowacji, infrastruktura B+R, cyfryzacja, zazielenienie, internacjonalizacja, kompetencje), wskazując na elastyczne dopasowanie do branży IT.",
+                    otherPrograms: "Fundusze unijne i krajowe w szerokim zakresie.",
+                    services: "Identyfikacja potrzeb, dobór programu, przygotowanie dokumentacji aplikacyjnej, pomoc w rozliczeniu projektu.",
+                    uvp: "Wieloletnie doświadczenie i kompleksowe wsparcie w projektach IT, w tym B+R, wdrożeniowych i cyfryzacyjnych. Referencje: Komputronik.",
+                    link: "https://ecdf.pl/",
+                    email: "biuro@ecdf.pl",
+                    phone: "600 700 800"
+                },
+                {
+                    id: "innology",
+                    name: "Innology",
+                    profile: "Doświadczona firma doradcza w pozyskiwaniu grantów na projekty B+R (ponad 10 lat), uznana za skuteczność.",
+                    specialization: "Koncentracja na IT, AI, start-upach technologicznych. Wspieranie B+R, wdrożeń nowych technologii oraz cyfryzacji.",
+                    smartExperience: "Kompleksowe usługi dla Ścieżki SMART FENG: ocena kosztów, przygotowanie wniosku, strategiczny wybór modułów (B+R, wdrożenie innowacji, infrastruktura B+R, cyfryzacja, zielona transformacja, rozwój kompetencji, internacjonalizacja), wykazanie zdolności finansowej, doradztwo w rozliczaniu. Podkreślają elastyczność programu idealną dla IT.",
+                    otherPrograms: "Seal of Excellence, STEP, Kredyt Ekologiczny, Wzornictwo w MŚP, fundusze regionalne, EIC Accelerator, EIC Pathfinder, EIC Transition.",
+                    services: "Kompleksowe wsparcie: ocena projektu, pisanie wniosków, planowanie finansowe, zarządzanie projektem i rozliczanie.",
+                    uvp: "Lider skuteczności w grantach B+R (ponad 800 mln PLN pozyskanych). Głęboka ekspertyza w zaawansowanych technologiach (ICT/AI). Studia przypadków: Xcellence Labs, NEXT Mobile, Spisist, Morele.",
+                    link: "https://innologytree.pl/",
+                    email: "kontakt@innologytree.pl",
+                    phone: "22 379 26 46"
+                },
+                {
+                    id: "doradcy365",
+                    name: "Doradcy 365",
+                    profile: "Oferują kompleksowe usługi w zakresie pozyskiwania dotacji unijnych dla przedsiębiorstw z całej Polski.",
+                    specialization: "Skupiają się na projektach inwestycyjnych, B+R oraz doradztwie, z rosnącym doświadczeniem we współpracy z firmami produkcyjnymi, usługowymi i sektorem IT.",
+                    smartExperience: "Doświadczenie w pozyskiwaniu dofinansowania dla firm w ramach programu Ścieżka SMART. Pomagają w tworzeniu projektów obejmujących moduły B+R, wdrożenie innowacji i komercjalizację. Podkreślają, że ich wsparcie obejmuje zarówno fazę badawczą, jak i wdrożeniową, co jest kluczowe dla firm IT.",
+                    otherPrograms: "Szeroki zakres funduszy unijnych i krajowych.",
+                    services: "Audyt możliwości, przygotowanie wniosku, końcowe rozliczenie projektu.",
+                    uvp: "Kompleksowe wsparcie na każdym etapie, od audytu po rozliczenie. Referencje: Ford, Związek Banków Polskich.",
+                    link: "https://doradcy365.pl/",
+                    email: "kontakt@doradcy365.pl",
+                    phone: "512 000 669"
+                },
+                {
+                    id: "eurolinks",
+                    name: "Eurolinks",
+                    profile: "Firma doradcza z wieloletnim doświadczeniem w pozyskiwaniu funduszy z UE oraz źródeł krajowych.",
+                    specialization: "Wsparcie MŚP w realizacji projektów IT o charakterze inwestycyjnym, badawczym i proekologicznym.",
+                    smartExperience: "Aktywnie informują na swojej stronie internetowej o naborach i możliwościach finansowania w ramach Ścieżki SMART. Podkreślają, że program ten pozwala na realizację złożonych projektów, łączących badania, rozwój, wdrożenie innowacji oraz cyfryzację. Oferują doradztwo w zakresie optymalnego skonfigurowania projektu pod kątem kryteriów oceny.",
+                    otherPrograms: "Fundusze unijne i krajowe.",
+                    services: "Audyt, przygotowanie dokumentacji aplikacyjnej, zarządzanie projektem.",
+                    uvp: "Wieloletnie doświadczenie, specjalizacja w MŚP IT. Doradztwo w optymalnym konfigurowaniu projektu pod kryteria oceny.",
+                    link: "https://eurolinks.pl/",
+                    email: "biuro@eurolinks.pl",
+                    phone: "604 778 884"
+                },
+                {
+                    id: "a1europe",
+                    name: "A1 Europe",
+                    profile: "Firma doradcza specjalizująca się w kompleksowej obsłudze przedsiębiorców w zakresie pozyskiwania dotacji z funduszy unijnych i krajowych.",
+                    specialization: "Projekty B+R, inwestycyjne, internacjonalizacja, z bogatym doświadczeniem w branży IT i nowych technologii.",
+                    smartExperience: "Aktywnie wspierają i promują Ścieżkę SMART jako jedno z głównych źródeł finansowania innowacji. Szczegółowo prezentują założenia programu, wskazując na jego modułową budowę, idealną dla kompleksowych projektów IT, obejmujących fazę badawczą, wdrożeniową, rozwój infrastruktury czy cyfryzację.",
+                    otherPrograms: "Szeroki zakres funduszy unijnych i krajowych.",
+                    services: "Kompleksowa obsługa w pozyskiwaniu dotacji.",
+                    uvp: "Bogate doświadczenie w różnych branżach, w tym IT i nowoczesnych technologiach. Referencje: APTIV.",
+                    link: "https://www.a1europe.pl/",
+                    email: "biuro@a1europe.pl",
+                    phone: "535 010 100"
+                },
+                {
+                    id: "netrixlink",
+                    name: "Netrix Link",
+                    profile: "Firma o profilu technologiczno-doradczym, łącząca kompetencje z zakresu IT, badań i rozwoju oraz pozyskiwania funduszy.",
+                    specialization: "Bezpośrednie doświadczenie w realizacji projektów technologicznych, szerokie wsparcie dla podmiotów w przygotowywaniu i zarządzaniu projektami dofinansowanymi z UE.",
+                    smartExperience: "Oferują kompleksowe doradztwo w zakresie Ścieżki SMART. Pomagają w całym procesie aplikacyjnym, od zdefiniowania zakresu projektu B+R, przez analizę potencjału wdrożeniowego, aż po przygotowanie pełnej dokumentacji. Ich praktyczna wiedza z technologii jest szczególnie cenna przy formułowaniu założeń projektów IT.",
+                    otherPrograms: "Różne programy UE.",
+                    services: "Wsparcie w przygotowywaniu i zarządzaniu projektami dofinansowanymi z UE.",
+                    uvp: "Łączą kompetencje IT, B+R i pozyskiwania funduszy. Bezpośrednie doświadczenie technologiczne. Referencje: Connecto (Systemy informatyczne).",
+                    link: "https://link.netrix.com.pl/",
+                    email: "biuro@netrix.com.pl",
+                    phone: "504 117 733"
+                },
+                {
+                    id: "leyton",
+                    name: "Leyton",
+                    profile: "Globalny lider w pozyskiwaniu ulg podatkowych i grantów na innowacje. Ich misją jest pomóc firmom zoptymalizować inwestycje w B+R, technologię i zrównoważony rozwój.",
+                    specialization: "Wsparcie MŚP i dużych firm w dostępie do funduszy unijnych, w tym z sektora IT.",
+                    smartExperience: "Aktywnie wspierają przedsiębiorców w aplikowaniu o środki z programu Ścieżka SMART. Kładą nacisk na strategiczne podejście do finansowania innowacji, pomagając firmom zbudować projekty B+R i inwestycyjne w długoterminową strategię rozwoju. Kluczowe dla skutecznego aplikowania w Ścieżce SMART.",
+                    otherPrograms: "Ulgi podatkowe na B+R, fundusze unijne i krajowe.",
+                    services: "Elastyczne rozwiązania dopasowane do potrzeb klienta w zakresie pozyskiwania grantów.",
+                    uvp: "Globalne doświadczenie, elastyczne rozwiązania. Referencje: BTECH.",
+                    link: "https://leyton.com/pl/",
+                    email: "kontakt@leyton.com",
+                    phone: "22 243 00 00"
+                },
+                {
+                    id: "senseconsulting",
+                    name: "SENSE Consulting",
+                    profile: "Firma od lat utrzymująca się w czołówce rankingów firm doradczych w Polsce. Oferują kompleksową obsługę w zakresie pozyskiwania i rozliczania dotacji unijnych.",
+                    specialization: "Projekty innowacyjne, badawczo-rozwojowe oraz inwestycyjne dla firm z różnych sektorów, w tym IT.",
+                    smartExperience: "Wyczerpujący opis programu Ścieżka SMART na stronie. Podkreślają, że program pozwala na finansowanie całego procesu innowacyjnego – od pomysłu, przez badania, aż po wdrożenie i internacjonalizację, co doskonale odpowiada na potrzeby dynamicznie rozwijających się firm IT.",
+                    otherPrograms: "Szeroki zakres dotacji unijnych.",
+                    services: "Kompleksowa obsługa w zakresie pozyskiwania i rozliczania dotacji unijnych.",
+                    uvp: "Czołowa pozycja w rankingach firm doradczych. Kompleksowa obsługa. Referencje: VOLKSWAGEN, SOLARIS.",
+                    link: "https://senseconsulting.pl/",
+                    email: "biuro@senseconsulting.pl",
+                    phone: "71 348 39 36"
+                },
+                {
+                    id: "agencjainnowacji",
+                    name: "Agencja Innowacji",
+                    profile: "Koncentruje się na wspieraniu przedsiębiorstw w zakresie transferu technologii, komercjalizacji wiedzy oraz pozyskiwania finansowania na działalność innowacyjną.",
+                    specialization: "Usługi dedykowane firmom, które chcą rozwijać i wdrażać nowe produkty, usługi lub procesy, co czyni ich naturalnym partnerem dla sektora IT.",
+                    smartExperience: "Dynamicznie komunikują swoje wsparcie dla aplikujących do programu Ścieżka SMART. Opisują go jako szansę dla firm na skokowy rozwój technologiczny. Pomagają w przygotowaniu projektów, które wpiszą się w Krajowe Inteligentne Specjalizacje i mają duży potencjał rynkowy.",
+                    otherPrograms: "Szeroki zakres programów wspierających innowacje.",
+                    services: "Wsparcie w transferze technologii, komercjalizacji wiedzy i pozyskiwaniu finansowania.",
+                    uvp: "Naturalny partner dla sektora IT w rozwoju i wdrażaniu nowych produktów. Podkreślają znaczenie Krajowych Inteligentnych Specjalizacji.",
+                    link: "https://agencjainnowacji.com.pl/",
+                    email: "biuro@agencjainnowacji.com.pl",
+                    phone: "71 782 32 44"
+                },
+                {
+                    id: "euroleader",
+                    name: "EuroLeader",
+                    profile: "Firma z ugruntowaną pozycją na rynku, oferująca kompleksowe usługi doradcze w zakresie pozyskiwania i rozliczania dotacji unijnych.",
+                    specialization: "Wsparcie mikro, małych, średnich i dużych przedsiębiorstw w realizacji projektów inwestycyjnych, B+R oraz cyfryzacyjnych. Posiadają bogate doświadczenie we współpracy z firmami z branży IT.",
+                    smartExperience: "Aktywnie informują o możliwościach, jakie daje Ścieżka SMART, wskazując na jej modułową i elastyczną konstrukcję. Pomagają firmom IT w strukturyzacji projektów tak, aby wpisywały się w wymagania programu, oferując obsługę także tworzenie nowych produktów i usług cyfrowych, automatyzacji procesów czy wdrażanie innovacyjnych technologii.",
+                    otherPrograms: "Szeroki zakres dotacji unijnych i krajowych.",
+                    services: "Kompleksowe usługi doradcze w pozyskiwaniu i rozliczaniu dotacji.",
+                    uvp: "Ugruntowana pozycja na rynku, bogate doświadczenie w IT. Referencje: VITKOVICE MILMET S.A.",
+                    link: "https://euroleader.pl/",
+                    email: "biuro@euroleader.pl",
+                    phone: "607 700 610"
+                },
+                {
+                    id: "elpartners",
+                    name: "Elpartners",
+                    profile: "Kompleksowe usługi doradcze w zakresie finansowania firm, ze szczególnym uwzględnieniem funduszy unijnych.",
+                    specialization: "Wspierają innowacje, eksport, projekty B+R. Duże doświadczenie w pracy z firmami IT.",
+                    smartExperience: "Posiadają dedykowaną ofertę dotyczącą programu Ścieżka SMART. Podkreślają jego modułową strukturę, która pozwala na finansowanie całego procesu innowacyjnego – od pomysłu, przez badania, aż po wdrożenie i internacjonalizację, co doskonale odpowiada na potrzeby dynamicznie rozwijających się firm IT.",
+                    otherPrograms: "Różnego rodzaju programy i Fundusze Europejskie, w tym Kredyt Ekologiczny, Przemysł 4.0, Dig.IT.",
+                    services: "Kompleksowe wsparcie na każdym etapie: konsultacje, przygotowanie wniosków, dokumentacja, zarządzanie finansami projektu i rozliczanie.",
+                    uvp: "Nacisk na kompleksowe doradztwo w rozliczeniach i profesjonalne przygotowanie dokumentacji po otrzymaniu grantu. Referencje: Prologistica, Sp. z o.o., Empirica S.A.",
+                    link: "https://elpartners.pl/",
+                    email: "biuro@elpartners.pl",
+                    phone: "71 799 43 00"
+                },
+                {
+                    id: "garmulka",
+                    name: "Grupa Garmulka",
+                    profile: "Firma o ugruntowanej pozycji, oferująca kompleksowe usługi doradcze, w tym audyty, podatki, prawo i pozyskiwanie dotacji.",
+                    specialization: "Dział doradztwa unijnego specjalizuje się w projektach B+R, inwestycyjnych i cyfryzacji. Pomagają w przygotowaniu dokumentacji i rozliczaniu projektów, kluczowe dla firm IT.",
+                    smartExperience: "Aktywnie komunikują możliwość finansowania w ramach Ścieżka SMART. Szczegółowo omawiają modułową strukturę programu, wskazując, jak firmy z sektora IT mogą skorzystać z finansowania na rozwój oprogramowania, tworzenie nowych produktów cyfrowych czy wdrażanie zaawansowanych technologii informatycznych.",
+                    otherPrograms: "Szeroki zakres dotacji unijnych i krajowych.",
+                    services: "Kompleksowe usługi doradcze: audyty, podatki, prawo, pozyskiwanie dotacji, przygotowanie i rozliczanie projektów.",
+                    uvp: "Ugruntowana pozycja, kompleksowe wsparcie w różnych dziedzinach, w tym dla IT. Referencje: Miasto Tychy, Silesia Film.",
+                    link: "http://www.garmulka.pl/",
+                    email: "biuro@garmulka.pl",
+                    phone: "32 201 10 00"
+                },
+                {
+                    id: "efekta",
+                    name: "EFEKTA",
+                    profile: "Specjalizuje się w pozyskiwaniu dofinansowania dla firm na projekty badawczo-rozwojowe, wdrożeniowe i inwestycyjne.",
+                    specialization: "Wyróżnia się wysoką skutecznością i indywidualnym podejściem. Portfolio zawiera liczne projekty zrealizowane dla branży technologicznej i IT.",
+                    smartExperience: "Posiadają dedykowaną ofertę dotyczącą programu Ścieżka SMART. Podkreślają, że ich wsparcie obejmuje nie tylko przygotowanie wniosku, ale także opracowanie strategii i modelu biznesowego dla projektu, co jest kluczowe dla uzyskania wysokiej oceny. Pomagają firmom IT w przygotowaniu projektów obejmujących moduły B+R, wdrożenie innowacji i cyfryzację.",
+                    otherPrograms: "Szeroki zakres dofinansowań.",
+                    services: "Pozyskiwanie dofinansowania, opracowanie strategii i modelu biznesowego dla projektu.",
+                    uvp: "Wysoka skuteczność i indywidualne podejście. Liczne projekty dla branży technologicznej i IT. Referencje: LUTIO group, ZDF.",
+                    link: "https://efekta.waw.pl/",
+                    email: "biuro@efekta.waw.pl",
+                    phone: "22 254 53 00"
+                },
+                {
+                    id: "evolution",
+                    name: "Evolution",
+                    profile: "Firma doradcza skoncentrowana na finansowaniu innowacji. Oferują kompleksową obsługę w zakresie dotacji unijnych oraz ulg podatkowych.",
+                    specialization: "Silnie ukierunkowana na wsparcie firm technologicznych, start-upów oraz przedsiębiorców planujących transformację cyfrową.",
+                    smartExperience: "Ścieżka SMART jest jednym z kluczowych programów w ofercie firmy Evolution. Prezentują program jako elastyczne narzędzie do finansowania kompleksowych przedsięwzięć. Oferują wsparcie w budowie projektów, które mogą obejmować zarówno tworzenie algorytmów i systemów IT (moduł B+R), jak i ich późniejszą komercjalizację oraz internacjonalizację.",
+                    otherPrograms: "Dotacje unijne, ulgi podatkowe (np. ulga B+R).",
+                    services: "Kompleksowa obsługa w zakresie dotacji i ulg podatkowych.",
+                    uvp: "Silna koncentracja na finansowaniu innowacji dla firm technologicznych i start-upów. Wsparcie w tworzeniu algorytmów i systemów IT (moduł B+R).",
+                    link: "https://evolution.pl/",
+                    email: "biuro@evolution.pl",
+                    phone: "22 654 34 30"
+                }
+            ];
+
+            const firmButtonsContainer = document.getElementById('firmButtons');
+            const firmDetailsContainer = document.getElementById('firmDetails');
+            const comparisonCheckboxesContainer = document.getElementById('comparisonCheckboxes');
+            const comparisonTable = document.getElementById('comparisonTable');
+            const comparisonTableBody = comparisonTable ? comparisonTable.querySelector('tbody') : null;
+            const comparisonTableHeader = comparisonTable ? comparisonTable.querySelector('thead tr') : null;
+
+            let activeFirmCard = null; // Zmieniona nazwa zmiennej
+
+            if (firmButtonsContainer) {
+                firmsData.forEach(firm => {
+                    const card = document.createElement('div'); // Teraz tworzymy div, a nie button
+                    card.classList.add('firm-card'); // Nowa klasa CSS
+                    card.innerHTML = `<h3 class="text-base font-medium text-slate-700 group-[.active]:text-white">${firm.name}</h3>`; // H3 zamiast tekstu, z grupą dla aktywnego stanu
+                    card.dataset.firmId = firm.id;
+                    card.addEventListener('click', () => {
+                        if (activeFirmCard) {
+                            activeFirmCard.classList.remove('active');
+                        }
+                        card.classList.add('active');
+                        activeFirmCard = card;
+                        displayFirmDetails(firm.id);
+                    });
+                    firmButtonsContainer.appendChild(card); // Dodaj do kontenera
+                
+                    if (comparisonCheckboxesContainer) {
+                        const checkboxDiv = document.createElement('div');
+                        checkboxDiv.classList.add('flex', 'items-center');
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.id = `compare-${firm.id}`;
+                        checkbox.value = firm.id;
+                        checkbox.classList.add('h-4', 'w-4', 'text-sky-600', 'border-slate-300', 'rounded', 'focus:ring-sky-500');
+                        checkbox.addEventListener('change', updateComparisonTable);
+                        const label = document.createElement('label');
+                        label.htmlFor = `compare-${firm.id}`;
+                        label.textContent = firm.name;
+                        label.classList.add('ml-2', 'block', 'text-sm', 'text-slate-700', 'select-none'); // Prevent text selection
+                        checkboxDiv.appendChild(checkbox);
+                        checkboxDiv.appendChild(label);
+                        comparisonCheckboxesContainer.appendChild(checkboxDiv);
+                    }
+                });
+            } else {
+                console.error("Element o ID 'firmButtons' nie został znaleziony w DOM.");
+            }
+
+
+            function displayFirmDetails(firmId) {
+                const firm = firmsData.find(f => f.id === firmId);
+                if (firm && firmDetailsContainer) {
+                    firmDetailsContainer.innerHTML = `
+                        <h3 class="text-3xl font-bold text-sky-700 mb-2">${firm.name}</h3>
+                        <p class="text-sm text-slate-500 mb-5 italic">${firm.profile}</p>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-slate-700 flex items-center mb-1"><svg class="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V3zm2 0h10v14H5V3zm2 2h6v2H7V5zm0 4h6v2H7V9zm0 4h4v2H7v-2z" clip-rule="evenodd"></path></svg>Specjalizacja w Grantach UE dla IT:</h4>
+                                <p class="text-slate-600 text-sm leading-relaxed">${firm.specialization}</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-700 flex items-center mb-1"><svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-9a1 1 0 00-2 0v2a1 1 0 102 0V9zm4 0a1 1 0 00-2 0v2a1 1 0 102 0V9z" clip-rule="evenodd"></path></svg>Doświadczenie w Programie Ścieżka SMART:</h4>
+                                <p class="text-slate-600 text-sm leading-relaxed">${firm.smartExperience}</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-700 flex items-center mb-1"><svg class="w-5 h-5 mr-2 text-purple-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a8 8 0 00-8 8c0 2.83 1.15 5.43 3 7.37V19a1 1 0 001 1h8a1 1 0 001-1v-1.63c1.85-1.94 3-4.54 3-7.37a8 8 0 00-8-8zM7.5 10a2.5 2.5 0 105 0 2.5 2.5 0 00-5 0z" clip-rule="evenodd"></path></svg>Inne Istotne Programy:</h4>
+                                <p class="text-slate-600 text-sm leading-relaxed">${firm.otherPrograms}</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-700 flex items-center mb-1"><svg class="w-5 h-5 mr-2 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-9a1 1 0 00-2 0v2a1 1 0 102 0V9zm4 0a1 1 0 00-2 0v2a1 1 0 102 0V9z" clip-rule="evenodd"></path></svg>Oferowane Usługi:</h4>
+                                <p class="text-slate-600 text-sm leading-relaxed">${firm.services}</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-700 flex items-center mb-1"><svg class="w-5 h-5 mr-2 text-teal-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Unikalna Propozycja Wartości / Sukcesy:</h4>
+                                <p class="text-slate-600 text-sm leading-relaxed">${firm.uvp}</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 border-t pt-4 border-slate-200 space-y-2">
+                            ${firm.link ? `<div class="flex items-center"><svg class="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.586 10a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><h4 class="font-semibold text-slate-700 mr-2">Strona:</h4><a href="${firm.link}" target="_blank" class="text-sky-600 hover:underline text-sm truncate max-w-full">${firm.link}</a></div>` : ''}
+                            ${firm.email ? `<div class="flex items-center"><svg class="w-5 h-5 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg><h4 class="font-semibold text-slate-700 mr-2">E-mail:</h4><a href="mailto:${firm.email}" class="text-sky-600 hover:underline text-sm">${firm.email}</a></div>` : ''}
+                            ${firm.phone ? `<div class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l1.3 9.1a1 1 0 01-.292.805l-2.738 2.738A8 8 0 0015.688 18H18a1 1 0 011 1v1a1 1 0 01-1 1H2a1 1 0 01-1-1v-1a1 1 0 011-1h1.312A8 8 0 002.312 3.688z"></path></svg><h4 class="font-semibold text-slate-700 mr-2">Telefon:</h4>${firm.phone.split(',').map(p => `<a href="tel:${p.trim().replace(/[\s]/g, '')}" class="text-sky-600 hover:underline text-sm">${p.trim()}</a>`).join('<br>')}</div>` : ''}
+                        </div>
+                    `;
+                }
+            }
+            
+            function updateComparisonTable() {
+                if (!comparisonCheckboxesContainer || !comparisonTableHeader || !comparisonTableBody) {
+                    console.error("Brak elementów do porównania tabeli.");
+                    return;
+                }
+
+                const selectedCheckboxes = Array.from(comparisonCheckboxesContainer.querySelectorAll('input[type="checkbox"]:checked'));
+                
+                if (selectedCheckboxes.length > 3) {
+                    this.checked = false;
+                    alert("Możesz wybrać maksymalnie 3 firmy do porównania.");
+                    return;
+                }
+
+                const selectedFirmIds = selectedCheckboxes.map(cb => cb.value);
+                const selectedFirms = firmsData.filter(f => selectedFirmIds.includes(f.id));
+
+                comparisonTableHeader.innerHTML = '<th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider sticky left-0 bg-slate-100 z-10">Kryterium</th>';
+                selectedFirms.forEach(firm => {
+                    const th = document.createElement('th');
+                    th.classList.add('px-4', 'py-3', 'text-left', 'text-xs', 'font-medium', 'text-slate-500', 'uppercase', 'tracking-wider');
+                    th.textContent = firm.name;
+                    comparisonTableHeader.appendChild(th);
+                });
+                
+                comparisonTableBody.innerHTML = '';
+
+                if (selectedFirms.length === 0) {
+                    comparisonTableBody.innerHTML = '<tr><td colspan="4" class="text-center py-10 text-slate-500 text-lg">Wybierz firmy, aby rozpocząć porównanie.</td></tr>';
+                    return;
+                }
+
+                const criteria = [
+                    { key: 'specialization', label: 'Specjalizacja w IT/SMART' },
+                    { key: 'smartExperience', label: 'Doświadczenie w Ścieżce SMART' },
+                    { key: 'otherPrograms', label: 'Inne Kluczowe Programy' },
+                    { key: 'uvp', label: 'Unikalna Propozycja Wartości / Sukcesy' },
+                    { key: 'services', label: 'Oferowane Usługi'},
+                    { key: 'link', label: 'Strona Internetowa', isLink: true },
+                    { key: 'email', label: 'E-mail', isEmail: true },
+                    { key: 'phone', label: 'Telefon', isPhone: true }
+                ];
+
+                criteria.forEach(criterion => {
+                    const row = comparisonTableBody.insertRow();
+                    const th = document.createElement('th');
+                    th.classList.add('px-4', 'py-3', 'text-left', 'text-sm', 'font-medium', 'text-slate-700', 'bg-slate-50', 'sticky', 'left-0', 'z-10');
+                    th.scope = 'row';
+                    th.textContent = criterion.label;
+                    row.appendChild(th);
+
+                    selectedFirms.forEach(firm => {
+                        const cell = row.insertCell();
+                        cell.classList.add('px-4', 'py-3', 'text-sm', 'text-slate-600', 'align-top');
+                        if (criterion.isLink && firm[criterion.key]) {
+                            const link = document.createElement('a');
+                            link.href = firm[criterion.key];
+                            link.textContent = firm[criterion.key].replace(/^(https?:\/\/)/, ''); // Remove http/https for cleaner display
+                            link.target = "_blank";
+                            link.classList.add('text-sky-600', 'hover:underline');
+                            cell.appendChild(link);
+                        } else if (criterion.isEmail && firm[criterion.key]) {
+                            const mailtoLink = document.createElement('a');
+                            mailtoLink.href = `mailto:${firm[criterion.key]}`;
+                            mailtoLink.textContent = firm[criterion.key];
+                            mailtoLink.classList.add('text-sky-600', 'hover:underline');
+                            cell.appendChild(mailtoLink);
+                        } else if (criterion.isPhone && firm[criterion.key]) {
+                            const phones = firm[criterion.key].split(',').map(p => p.trim());
+                            phones.forEach((phone, index) => {
+                                const telLink = document.createElement('a');
+                                telLink.href = `tel:${phone.replace(/[\s]/g, '')}`;
+                                telLink.textContent = phone;
+                                telLink.classList.add('text-sky-600', 'hover:underline');
+                                cell.appendChild(telLink);
+                                if (index < phones.length - 1) {
+                                    cell.appendChild(document.createElement('br'));
+                                }
+                            });
+                        }
+                         else {
+                            cell.textContent = firm[criterion.key] || '-';
+                        }
+                    });
+                });
+            }
+
+
+            const selectionCriteriaData = [
+                { title: "Udokumentowane Doświadczenie", content: "Szukaj firm z historią udanych wniosków, szczególnie w IT. Liczba i wartość pozyskanych grantów są ważnymi wskaźnikami." },
+                { title: "Ekspertyza w IT/SMART", content: "Firma powinna rozumieć projekty IT (rozwój oprogramowania, AI, etc.) oraz niuanse programu Ścieżka SMART." },
+                { title: "Kompleksowa Oferta Usług", content: "Wartościowe są firmy oferujące wsparcie od oceny projektu, przez pisanie wniosku, aż po zarządzanie i rozliczanie grantu." },
+                { title: "Referencje i Opinie Klientów", content: "Pozytywne opinie i studia przypadków świadczą o niezawodności i skuteczności." },
+                { title: "Styl Komunikacji i Dopasowanie", content: "Upewnij się, że podejście firmy jest zgodne z kulturą Twojego przedsiębiorstwa. Współpracujące podejście jest korzystne." },
+                { title: "Akredytacje i Status Instytucjonalny", content: "Oficjalne akredytacje (np. status IOB) mogą oferować dodatkową wiarygodność i zapewnienie jakości." }
+            ];
+
+            const selectionCriteriaContainer = document.getElementById('selectionCriteria');
+            if (selectionCriteriaContainer) {
+                selectionCriteriaData.forEach(item => {
+                    const card = document.createElement('div');
+                    card.classList.add('card'); // Custom class defined in <style>
+                    
+                    const titleWrapper = document.createElement('div');
+                    titleWrapper.classList.add('flex', 'justify-between', 'items-center', 'mb-2'); // Flexbox dla tytułu i ikony
+
+                    const title = document.createElement('h3');
+                    title.classList.add('text-lg', 'font-semibold', 'text-sky-700');
+                    title.textContent = item.title;
+                    
+                    const icon = document.createElement('span');
+                    icon.classList.add('text-sky-500', 'icon');
+                    icon.innerHTML = '&#9660;'; // Down arrow Unicode
+
+                    titleWrapper.appendChild(title);
+                    titleWrapper.appendChild(icon);
+
+                    const content = document.createElement('p');
+                    content.classList.add('text-sm', 'text-slate-600', 'leading-relaxed'); // No 'hidden' class initially
+
+                    const contentWrapper = document.createElement('div');
+                    contentWrapper.style.maxHeight = '0';
+                    contentWrapper.style.overflow = 'hidden';
+                    contentWrapper.style.transition = 'max-height 0.3s ease-out, opacity 0.3s ease-out';
+                    contentWrapper.style.opacity = '0';
+                    contentWrapper.appendChild(content);
+
+                    content.textContent = item.content;
+
+                    card.appendChild(titleWrapper); // Append the wrapper with title and icon
+                    card.appendChild(contentWrapper); // Append the wrapper
+
+                    card.addEventListener('click', () => {
+                        const currentMaxHeight = contentWrapper.style.maxHeight;
+
+                        if (currentMaxHeight === '0px' || currentMaxHeight === '') {
+                            contentWrapper.style.maxHeight = contentWrapper.scrollHeight + 'px';
+                            contentWrapper.style.opacity = '1';
+                            icon.classList.add('rotate-180'); // Rotate icon
+                        } else {
+                            contentWrapper.style.maxHeight = '0';
+                            contentWrapper.style.opacity = '0';
+                            icon.classList.remove('rotate-180'); // Reset icon rotation
+                        }
+                    });
+                    
+                    selectionCriteriaContainer.appendChild(card);
+                });
+            } else {
+                console.error("Element o ID 'selectionCriteria' nie został znaleziony w DOM.");
+            }
+        });
+    </script>
+</body>
+</html>
